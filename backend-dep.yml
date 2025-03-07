@@ -15,7 +15,7 @@ spec:
     app: backend-app
   spec:
    containers:
-    name: backend-container
-    image: razaaa2gud/backend-test:v1
-    ports:
-     - containerPort: 4001
+    - name: backend-container
+      image: razaaa2gud/backend-test:v1
+      ports:
+       - containerPort: 4001
