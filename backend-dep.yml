@@ -1,0 +1,21 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+ name: backend-dep
+ namespace: test-ns
+spec:
+ selector:
+  matchLabels:
+   app: backend-app
+ replicas: 3
+ template:
+  metadata:
+   name: backend-pod
+   labels:
+    app: backend-app
+  spec:
+   containers:
+    name: backend-container
+    image: razaaa2gud/backend-test:v1
+    ports:
+     - containerPort: 4001
