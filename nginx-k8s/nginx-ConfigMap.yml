@@ -1,27 +1,43 @@
-kind: ConfigMap
 apiVersion: v1
+kind: ConfigMap
 metadata:
   name: nginx-config
   namespace: test-ns
 data:
-  my_conf.conf: |
-    server {
-        listen 80;
+  nginx.conf: |
+    events { worker_connections 1024; }
 
-        location / {
-            proxy_pass http://frontend-service.test-ns.svc.cluster.local:5173;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
+    http {
+        include /etc/nginx/mime.types;
+        sendfile on;
+
+        upstream frontend {
+           # server 10.96.100.219:5173;
+           server 10.96.205.220:4001;
         }
 
-        location /api/ {
-            proxy_pass http://backend-service.test-ns.svc.cluster.local:4001;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
+        upstream backend {
+            server 10.96.205.220:4001;
+        }
+
+        server {
+            listen 80;
+
+            location / {
+                proxy_pass http://10.96.205.220:4001;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+            location /api/ {
+                proxy_pass http://10.96.205.220:4001;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
         }
     }
 
