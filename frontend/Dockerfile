@@ -1,27 +1,19 @@
-# Use a lightweight Node.js image
-FROM node:alpine 
+# Use Node.js image to build Vite app
 
-# Set working directory
-WORKDIR /frontend
-
-# Copy package.json and package-lock.json (if available)
+FROM node:alpine AS build
+WORKDIR /app
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install 
-
-# Copy the rest of the app files
 COPY . .
-
-# Build the React app
 RUN npm run build
 
-# Install serve to serve the built files
-RUN npm install -g serve
 
-# Expose the correct port for production
-EXPOSE 5173
+# Use nginx to serve the built app
 
-# Serve the built frontend
-CMD ["npx","serve", "-s", "dist", "-l", "5173"]
+FROM nginx:alpine
+WORKDIR usr/share/nginx/html
+RUN rm -rf ./*
+COPY --from=build /app/dist .
+EXPOSE 80
+CMD ["nginx","-g","daemon off;"]
 
