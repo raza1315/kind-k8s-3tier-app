@@ -24,21 +24,22 @@ data:
             listen 80;
 
             location / {
-                proxy_pass http://10.96.100.219:5173;
+                proxy_pass http://10.96.100.219:5173/api/;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header X-Forwarded-Proto $scheme;
             }
 
-            location /api {
+            location /api/ {
                 proxy_pass http://10.96.205.220:4001/;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header X-Forwarded-Proto $scheme;
-               rewrite ^/api/(.*)$ /$1 break; 
-           }
+            }
         }
     }
 
