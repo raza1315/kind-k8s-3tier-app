@@ -16,3 +16,7 @@ kubectl apply -f frontend-svc.yml
 kubectl apply -f backend-dev.yml
 kubectl apply -f backend-svc.yml
 ```
+3. Nginx REVERSE-PROXY ->
+   - 1. CREATE A CONFIGMAP YAML (IN TEST-NS NAMESPACE) WE WILL USE THIS TO APPLY THE CONFIGURATIONS TO NGINX CONTAINERS.
+     2. CREATE DEPLOYMENT YAML AND SERVICE YAML (BOTH IN TEST-NS NAMESPACE) AND APPLY THEM TO K8S CLUSTER. cluster type can be LoadBalancer for cloud, this will provide you a load balancer (ELB -> ELASTIC LOAD BALANCER (AWS) ) WITH PUBLIC IP
+ 
