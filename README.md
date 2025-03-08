@@ -22,4 +22,7 @@ kubectl apply -f backend-svc.yml
  
 ## CHECK THE MANIFEST/YAML FILES FOR CREATING DEPLOYMENTS AND SERVICES.
 
-## I am using the Internal Cluster IPs (as they are in same name space fronten,backend,nginx services so they can communicate using this just like docker networks ... sort of ;) ) of frontend and backend service for proxy pass
+## I am using the Internal Cluster IPs (as they are in same name space fronten,backend,nginx services so they can communicate using this just like docker networks ... sort of ;)  ) of frontend and backend service for proxy pass
+
+## -Raza
+
