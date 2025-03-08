@@ -21,3 +21,5 @@ kubectl apply -f backend-svc.yml
      2. CREATE DEPLOYMENT YAML AND SERVICE YAML (BOTH IN TEST-NS NAMESPACE) AND APPLY THEM TO K8S CLUSTER. cluster type can be LoadBalancer for cloud, this will provide you a load balancer (ELB -> ELASTIC LOAD BALANCER (AWS) ) WITH PUBLIC IP
  
 ## CHECK THE MANIFEST/YAML FILES FOR CREATING DEPLOYMENTS AND SERVICES.
+
+## I am using the Internal Cluster IPs of frontend and backend service for proxy pass
