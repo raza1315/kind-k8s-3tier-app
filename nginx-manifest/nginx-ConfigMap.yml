@@ -12,11 +12,11 @@ data:
         sendfile on;
 
         upstream frontend {
-            server 10.96.100.219:5173/;
+            server 10.96.100.219:5173;
         }
 
         upstream backend {
-            server 10.96.205.220:4001/api/;
+            server 10.96.205.220:4001;
         }
 
         server {
@@ -33,6 +33,7 @@ data:
             }
 
             location /api/ {
+                rewrite ^/api/(.*) /$1 break;
                 proxy_pass http://backend;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
